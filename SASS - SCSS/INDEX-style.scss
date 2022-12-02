@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800|Open+Sans:300,400,600,700');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+
+@import '_variables.scss';
+@import '_mixins.scss';
+@import '_animations.scss'; 
+
+
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+/*
+html{
+    --res: calc(0.01 * 10vmin);
+}
+*/
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #1d1c1b;//#262524
+
+}
+ul li{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.page{
+    @include FlexMid(column);
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    .fondu-out {
+        opacity: 0;
+        transition: opacity 0.4s ease-out;
+    }
+    .loader{
+        pointer-events: none;
+        position: relative;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(25px);
+        z-index: 10;
+        .svg-position{
+            @include Centreabsolute;
+            svg{
+                width: 120px;
+                animation: rotate 2s infinite ease;
+            }
+        }
+        @keyframes rotate {
+            0% {
+              transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+    }
+    .header{
+        @include FlexMid(row);
+        width: 100%;
+        height: 100px;
+        z-index: 1;
+        ul{
+            @include FlexMid(row);
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0 4vw;
+            svg{
+                width: 60px;
+            }
+            a{
+                background: white;
+                color: black;
+                font-size: 18px;
+                font-weight: 600;
+                padding: 10px 40px;
+                border-radius: 50px;
+            }
+        }
+    }
+    .torsolol{
+        @include FlexMid(row);
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        .box1{
+            @include FlexMid(column);
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            color: white;
+            padding: 0 3vw;
+            text-shadow: 1px 1px 1px #cf1020,
+            1px 2px 1px #cf1020,
+            1px 3px 1px #cf1020,
+            1px 4px 1px #cf1020,
+        1px 18px 6px rgba(207, 16, 32,0.4),
+        1px 22px 10px rgba(207, 16, 32,0.2),
+        1px 25px 35px rgba(207, 16, 32,0.2),
+        1px 30px 60px rgba(207, 16, 32,0.4);
+            :nth-child(1){
+                font-size: 80px;
+                font-weight: 700;
+                letter-spacing: 5px;
+            }
+            :nth-child(2){
+                font-size: 50px;
+                font-weight: 600;
+            }
+        }
+        .box2{
+            @include FlexMid(column);
+            flex: 2;
+            width: 100%;
+            height: 100%;
+            cursor: grab !important;
+            :active{
+                cursor: grabbing;
+            }
+            iframe{
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                #document{
+                    canvas{
+                        cursor: grab !important;
+                    }
+                }
+            }
+        }
+        .box3{
+            @include FlexMid(column);
+            align-items: flex-start;
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            color: white;
+            padding: 0 3vw;
+            :nth-child(1){
+                font-size: 22px;
+                font-family: 'Nunito', sans-serif;
+                text-shadow: 1px 1px 1px #cf1020,
+            1px 18px 6px rgba(207, 16, 32,0.1),
+            }
+            a{
+                margin-top: 1vw;
+                font-weight: 700;
+                background: #cf1020;
+                color: white;
+                padding: 13px 35px;
+                border-radius: 50px;
+                z-index: 1;
+            }
+            &.active-box{
+                display: flex;
+            }
+        }
+    }
+    .footer{
+        //position: absolute;
+        //bottom: 0;
+        @include FlexMid(row);
+        width: 100%;
+        height: 100px;
+        z-index: 1;
+        .colorchoice{
+            @include FlexMid(row);
+            width: 200px;
+            height: 100%;
+            .color{
+                border-radius: 100%;
+                width: 45px;
+                height: 45px;
+            }
+            :nth-child(1){
+                background: red;
+            }
+            :nth-child(2){
+                background: red;
+                margin: 0 10px;
+            }
+            :nth-child(3){
+                background: red;
+            }
+        }
+    }
+
+
+    //Laptop
+    @media screen and (max-width: 1024px) {
+        .torsolol{
+            .box2{
+                height: 70%;
+            }
+        }
+
+    }
+    //Tablets
+    @media screen and (min-width: 770px) {
+    }
+    @media screen and (max-width: 768px) {
+        .torsolol{
+            @include FlexMid(column);
+            .box2{
+                height: 100%;
+            }
+            .box3{
+                display: none;
+                align-items: center;
+            }
+        }
+    }
+    //phones
+    @media screen and (max-width: 575px) {
+        .torsolol{
+            .box3{
+            }
+        }
+    }
+}
