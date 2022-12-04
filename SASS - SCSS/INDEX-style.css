@@ -118,7 +118,7 @@ a {
 .page .header ul svg {
   width: 60px;
 }
-.page .header ul a {
+.page .header ul :nth-child(2) {
   background: white;
   color: black;
   font-size: 18px;
@@ -194,10 +194,12 @@ a {
 }
 .page .torsolol .box2 .ice-biome {
   position: absolute;
+  top: 200%;
   opacity: 0;
 }
 .page .torsolol .box2 .wind-biome {
   position: absolute;
+  top: 200%;
   opacity: 0;
 }
 .page .torsolol .box2 .clickme {
@@ -207,7 +209,6 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-weight: 800;
   z-index: 1;
 }
 .page .torsolol .box2 .clickme.fade-out {
@@ -321,7 +322,7 @@ a {
     height: 100%;
   }
   .page .torsolol .box2 iframe {
-    pointer-events: none;
+    pointer-events: none !important;
   }
   .page .torsolol .box2 .clickme {
     display: block;

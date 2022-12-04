@@ -89,7 +89,7 @@ a{
             svg{
                 width: 60px;
             }
-            a{
+            :nth-child(2){
                 background: white;
                 color: black;
                 font-size: 18px;
@@ -179,17 +179,18 @@ a{
             }
             .ice-biome{
                 position: absolute;
+                top: 200%;
                 opacity: 0;
             }
             .wind-biome{
                 position: absolute;
+                top: 200%;
                 opacity: 0;
             }
             .clickme{
                 display: none;
                 @include Centreabsolute;
                 color: white;
-                font-weight: 800;
                 z-index: 1;
                 &.fade-out{
                     display: none;
@@ -291,7 +292,7 @@ a{
             .box2{
                 height: 100%;
                 iframe{
-                    pointer-events: none;
+                    pointer-events: none !important;
                 }
                 .clickme{
                     display: block;

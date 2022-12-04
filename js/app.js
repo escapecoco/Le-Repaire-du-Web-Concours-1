@@ -51,6 +51,7 @@ function func1(){
         //lava
         box1.classList.remove('ice-textshadow', 'wind-textshadow');
         box1.classList.add('lava-textshadow');
+        box1.innerHTML = '<p>LAVA</p><p>BIOME</p>';
         box3_p.classList.remove('ice-textshadow', 'wind-textshadow');
         box3_p.classList.add('lava-textshadow');
         box3_a.style.background = "#cf1020";
@@ -61,12 +62,15 @@ function func1(){
         lavabiome.style.position = "initial";
         lavabiome.style.opacity = "1";
         box2_p.style.color = "white"
-
+        lavabiome.style.pointerEvents = "initial";
+        icebiome.style.pointerEvents = "none";
+        windbiome.style.pointerEvents = "none";
         break;
     case 2:
         //ice
         box1.classList.remove('wind-textshadow', 'lava-textshadow');
         box1.classList.add('ice-textshadow');
+        box1.innerHTML = '<p>ICE</p><p>BIOME</p>';
         box3_p.classList.remove('wind-textshadow', 'lava-textshadow');
         box3_p.classList.add('ice-textshadow');
         box3_a.style.background = "#71D0D2";
@@ -77,11 +81,15 @@ function func1(){
         icebiome.style.position = "initial";
         icebiome.style.opacity = "1";
         box2_p.style.color = "black"
+        icebiome.style.pointerEvents = "initial";
+        lavabiome.style.pointerEvents = "none";
+        windbiome.style.pointerEvents = "none";
         break;
     case 3:
         //wind
         box1.classList.remove('ice-textshadow', 'lava-textshadow');
         box1.classList.add('wind-textshadow');
+        box1.innerHTML = '<p>WIND</p><p>BIOME</p>';
         box3_p.classList.remove('ice-textshadow', 'lava-textshadow');
         box3_p.classList.add('wind-textshadow');
         box3_a.style.background = "#7cc053";
@@ -91,7 +99,10 @@ function func1(){
         icebiome.style.opacity = "0";
         windbiome.style.position = "initial";
         windbiome.style.opacity = "1";
-        //box2_p.style.color = "black"
+        box2_p.style.color = "black"
+        windbiome.style.pointerEvents = "initial";
+        lavabiome.style.pointerEvents = "none";
+        icebiome.style.pointerEvents = "none";
         break;
     }
 }
