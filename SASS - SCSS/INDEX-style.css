@@ -10,11 +10,14 @@
   font-family: "Montserrat", sans-serif;
 }
 
-/*
-html{
-    --res: calc(0.01 * 10vmin);
+html {
+  --maincolor: #cf1020;
+  --lava: #cf1020;
+  --ice: #71D0D2;
+  --snow: #fffafa;
+  --wind: #7cc053;
 }
-*/
+
 body {
   width: 100%;
   height: 100%;
@@ -145,6 +148,7 @@ a {
   color: white;
   padding: 0 3vw;
   text-shadow: 1px 1px 1px #cf1020, 1px 2px 1px #cf1020, 1px 3px 1px #cf1020, 1px 4px 1px #cf1020, 1px 18px 6px rgba(207, 16, 32, 0.4), 1px 22px 10px rgba(207, 16, 32, 0.2), 1px 25px 35px rgba(207, 16, 32, 0.2), 1px 30px 60px rgba(207, 16, 32, 0.4);
+  transition: text-shadow 0.2s;
 }
 .page .torsolol .box1 :nth-child(1) {
   font-size: 80px;
@@ -155,7 +159,17 @@ a {
   font-size: 50px;
   font-weight: 600;
 }
+.page .torsolol .box1.lava-textshadow {
+  text-shadow: 1px 1px 1px #cf1020, 1px 2px 1px #cf1020, 1px 3px 1px #cf1020, 1px 4px 1px #cf1020, 1px 18px 6px rgba(207, 16, 32, 0.4), 1px 22px 10px rgba(207, 16, 32, 0.2), 1px 25px 35px rgba(207, 16, 32, 0.2), 1px 30px 60px rgba(207, 16, 32, 0.4);
+}
+.page .torsolol .box1.ice-textshadow {
+  text-shadow: 1px 1px 1px #71D0D2, 1px 2px 1px #71D0D2, 1px 3px 1px #71D0D2, 1px 4px 1px #71D0D2, 1px 18px 6px rgba(113, 208, 210, 0.4), 1px 22px 10px rgba(113, 208, 210, 0.2), 1px 25px 35px rgba(113, 208, 210, 0.2), 1px 30px 60px rgba(113, 208, 210, 0.4);
+}
+.page .torsolol .box1.wind-textshadow {
+  text-shadow: 1px 1px 1px #7cc053, 1px 2px 1px #7cc053, 1px 3px 1px #7cc053, 1px 4px 1px #7cc053, 1px 18px 6px rgba(124, 192, 83, 0.4), 1px 22px 10px rgba(124, 192, 83, 0.2), 1px 25px 35px rgba(124, 192, 83, 0.2), 1px 30px 60px rgba(124, 192, 83, 0.4);
+}
 .page .torsolol .box2 {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -167,21 +181,40 @@ a {
   cursor: -webkit-grab !important;
   cursor: grab !important;
 }
-.page .torsolol .box2 :active {
-  cursor: -webkit-grabbing;
-  cursor: grabbing;
-}
 .page .torsolol .box2 iframe {
-  pointer-events: none;
   width: 100%;
   height: 100%;
   z-index: 0;
-}
-.page .torsolol .box2 iframe #document canvas {
   cursor: -webkit-grab !important;
   cursor: grab !important;
 }
+.page .torsolol .box2 iframe #canvas3d {
+  cursor: -webkit-grab !important;
+  cursor: grab !important;
+}
+.page .torsolol .box2 .ice-biome {
+  position: absolute;
+  opacity: 0;
+}
+.page .torsolol .box2 .wind-biome {
+  position: absolute;
+  opacity: 0;
+}
+.page .torsolol .box2 .clickme {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 800;
+  z-index: 1;
+}
+.page .torsolol .box2 .clickme.fade-out {
+  display: none;
+}
 .page .torsolol .box3 {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,12 +227,26 @@ a {
   color: white;
   padding: 0 3vw;
 }
-.page .torsolol .box3 :nth-child(1) {
+.page .torsolol .box3 p {
   font-size: 22px;
   font-family: "Nunito", sans-serif;
   text-shadow: 1px 1px 1px #cf1020, 1px 18px 6px rgba(207, 16, 32, 0.1);
 }
+.page .torsolol .box3 p.lava-textshadow {
+  text-shadow: 1px 1px 1px #cf1020, 1px 18px 6px rgba(207, 16, 32, 0.1);
+}
+.page .torsolol .box3 p.ice-textshadow {
+  text-shadow: 1px 1px 1px #71D0D2, 1px 18px 6px rgba(113, 208, 210, 0.1);
+}
+.page .torsolol .box3 p.wind-textshadow {
+  text-shadow: 1px 1px 1px #7cc053, 1px 18px 6px rgba(124, 192, 83, 0.1);
+}
 .page .torsolol .box3 a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
   margin-top: 1vw;
   font-weight: 700;
   background: #cf1020;
@@ -207,6 +254,10 @@ a {
   padding: 13px 35px;
   border-radius: 50px;
   z-index: 1;
+}
+.page .torsolol .box3 a img {
+  width: 10px;
+  margin-left: 5px;
 }
 .page .torsolol .box3.active-box {
   display: flex;
@@ -231,19 +282,27 @@ a {
   height: 100%;
 }
 .page .footer .colorchoice .color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
   border-radius: 100%;
   width: 45px;
   height: 45px;
 }
-.page .footer .colorchoice :nth-child(1) {
-  background: red;
+.page .footer .colorchoice .color img {
+  width: 20px;
 }
-.page .footer .colorchoice :nth-child(2) {
-  background: red;
+.page .footer .colorchoice .lava {
+  background: #cf1020;
+}
+.page .footer .colorchoice .ice {
+  background: #71D0D2;
   margin: 0 10px;
 }
-.page .footer .colorchoice :nth-child(3) {
-  background: red;
+.page .footer .colorchoice .wind {
+  background: #7cc053;
 }
 @media screen and (max-width: 1024px) {
   .page .torsolol .box2 {
@@ -261,8 +320,18 @@ a {
   .page .torsolol .box2 {
     height: 100%;
   }
+  .page .torsolol .box2 iframe {
+    pointer-events: none;
+  }
+  .page .torsolol .box2 .clickme {
+    display: block;
+  }
   .page .torsolol .box3 {
     display: none;
     align-items: center;
+  }
+  .page .torsolol .box3 p {
+    font-size: 20px !important;
+    padding-bottom: 1vw;
   }
 }/*# sourceMappingURL=INDEX-style.css.map */

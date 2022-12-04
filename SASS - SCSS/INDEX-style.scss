@@ -13,11 +13,15 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
-/*
+
 html{
-    --res: calc(0.01 * 10vmin);
+    --maincolor: #cf1020;
+    --lava: #cf1020;
+    --ice: #71D0D2;
+    --snow: #fffafa;
+    --wind: #7cc053;
 }
-*/
+
 body {
     width: 100%;
     height: 100%;
@@ -115,6 +119,7 @@ a{
         1px 22px 10px rgba(207, 16, 32,0.2),
         1px 25px 35px rgba(207, 16, 32,0.2),
         1px 30px 60px rgba(207, 16, 32,0.4);
+        transition: text-shadow .2s;
             :nth-child(1){
                 font-size: 80px;
                 font-weight: 700;
@@ -124,29 +129,75 @@ a{
                 font-size: 50px;
                 font-weight: 600;
             }
+            &.lava-textshadow{
+                text-shadow: 1px 1px 1px #cf1020,
+                1px 2px 1px #cf1020,
+                1px 3px 1px #cf1020,
+                1px 4px 1px #cf1020,
+            1px 18px 6px rgba(207, 16, 32,0.4),
+            1px 22px 10px rgba(207, 16, 32,0.2),
+            1px 25px 35px rgba(207, 16, 32,0.2),
+            1px 30px 60px rgba(207, 16, 32,0.4);
+            }
+            &.ice-textshadow{
+                text-shadow: 1px 1px 1px #71D0D2,
+                1px 2px 1px #71D0D2,
+                1px 3px 1px #71D0D2,
+                1px 4px 1px #71D0D2,
+            1px 18px 6px rgba(113, 208, 210,0.4),
+            1px 22px 10px rgba(113, 208, 210,0.2),
+            1px 25px 35px rgba(113, 208, 210,0.2),
+            1px 30px 60px rgba(113, 208, 210,0.4);
+            }
+            &.wind-textshadow{
+                text-shadow: 1px 1px 1px #7cc053,
+                1px 2px 1px #7cc053,
+                1px 3px 1px #7cc053,
+                1px 4px 1px #7cc053,
+            1px 18px 6px rgba(124, 192, 83,0.4),
+            1px 22px 10px rgba(124, 192, 83,0.2),
+            1px 25px 35px rgba(124, 192, 83,0.2),
+            1px 30px 60px rgba(124, 192, 83,0.4);
+            }
         }
         .box2{
+            position: relative;
             @include FlexMid(column);
             flex: 2;
             width: 100%;
             height: 100%;
             cursor: grab !important;
-            :active{
-                cursor: grabbing;
-            }
             iframe{
-                pointer-events: none;
+                //pointer-events: none;
                 width: 100%;
                 height: 100%;
                 z-index: 0;
-                #document{
-                    canvas{
-                        cursor: grab !important;
-                    }
+                cursor: grab !important;
+                #canvas3d{
+                    cursor: grab !important;
+                }
+            }
+            .ice-biome{
+                position: absolute;
+                opacity: 0;
+            }
+            .wind-biome{
+                position: absolute;
+                opacity: 0;
+            }
+            .clickme{
+                display: none;
+                @include Centreabsolute;
+                color: white;
+                font-weight: 800;
+                z-index: 1;
+                &.fade-out{
+                    display: none;
                 }
             }
         }
         .box3{
+            position: relative;
             @include FlexMid(column);
             align-items: flex-start;
             flex: 1;
@@ -154,13 +205,23 @@ a{
             height: 100%;
             color: white;
             padding: 0 3vw;
-            :nth-child(1){
+            p{
                 font-size: 22px;
                 font-family: 'Nunito', sans-serif;
                 text-shadow: 1px 1px 1px #cf1020,
-            1px 18px 6px rgba(207, 16, 32,0.1),
+            1px 18px 6px rgba(207, 16, 32,0.1);
+            &.lava-textshadow{
+                text-shadow: 1px 1px 1px #cf1020, 1px 18px 6px rgb(207, 16, 32,0.1);
+            }
+            &.ice-textshadow{
+                text-shadow: 1px 1px 1px #71D0D2, 1px 18px 6px rgb(113, 208, 210,0.1);
+            }
+            &.wind-textshadow{
+                text-shadow: 1px 1px 1px #7cc053, 1px 18px 6px rgb(124, 192, 83,0.1);
+            }
             }
             a{
+                @include FlexMid(row);
                 margin-top: 1vw;
                 font-weight: 700;
                 background: #cf1020;
@@ -168,6 +229,10 @@ a{
                 padding: 13px 35px;
                 border-radius: 50px;
                 z-index: 1;
+                img{
+                    width: 10px;
+                    margin-left: 5px;
+                }
             }
             &.active-box{
                 display: flex;
@@ -186,19 +251,23 @@ a{
             width: 200px;
             height: 100%;
             .color{
+                @include FlexMid(column);
                 border-radius: 100%;
-                width: 45px;
+                width: 45px;//clamp(45px, 5vw, 50px)
                 height: 45px;
+                img{
+                    width: 20px;
+                }
             }
-            :nth-child(1){
-                background: red;
+            .lava{
+                background: $lava;
             }
-            :nth-child(2){
-                background: red;
+            .ice{
+                background: $ice;
                 margin: 0 10px;
             }
-            :nth-child(3){
-                background: red;
+            .wind{
+                background: $wind;
             }
         }
     }
@@ -221,18 +290,24 @@ a{
             @include FlexMid(column);
             .box2{
                 height: 100%;
+                iframe{
+                    pointer-events: none;
+                }
+                .clickme{
+                    display: block;
+                }
             }
             .box3{
                 display: none;
                 align-items: center;
+                p{
+                    font-size: 20px !important;
+                    padding-bottom: 1vw;
+                }
             }
         }
     }
     //phones
     @media screen and (max-width: 575px) {
-        .torsolol{
-            .box3{
-            }
-        }
     }
 }
